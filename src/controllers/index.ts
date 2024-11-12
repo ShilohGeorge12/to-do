@@ -13,8 +13,24 @@ export const getTodo = async (req: Request, res: Response) => {
 };
 
 export const getTodos = async (req: Request, res: Response) => {
-	const todos = await TodoModel.find().select('title _id description isCompleted createdAt');
-	res.status(200).json(todos);
+	const page = parseInt(`${req.query.page}`) ?? 1; // default values for page
+	const limit = parseInt(`${req.query.limit}`) ?? 10; // default values for limit
+
+	const skip = (page - 1) * limit;
+	// Perform both queries in parallel using Promise.all
+	const [todos, totalItems] = await Promise.all([
+		TodoModel.find().select('title _id description isCompleted createdAt').skip(skip).limit(limit).exec(),
+		TodoModel.countDocuments(), // Count total documents in parallel
+	]);
+
+	const totalPages = Math.ceil(totalItems / limit);
+
+	res.status(200).json({
+		todos,
+		totalItems,
+		totalPages,
+		currentPage: page,
+	});
 };
 
 export const createTodo = async (req: Request, res: Response) => {
