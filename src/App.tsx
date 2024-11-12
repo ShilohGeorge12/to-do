@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 import ErrorBoundary from './components/Error';
 import { Home } from './pages/home';
@@ -28,6 +29,10 @@ function App() {
 					</Routes>
 				</Router>
 			</main>
+			<Toaster
+				richColors
+				position="bottom-right"
+			/>
 		</section>
 	);
 }

@@ -1,24 +1,73 @@
 import { FaCircleCheck } from 'react-icons/fa6';
-import { LuFileEdit } from 'react-icons/lu';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { toast } from 'sonner';
+import { KeyedMutator } from 'swr';
 
-import { TodoTypes } from '@/types';
+import { isDeletedTodoMessage, isTodo, TodoTypes } from '@/types';
+
+import { EditTodo } from '../../forms/editTodo';
 
 interface TodosProps {
 	todos: TodoTypes[];
-	// setTodos: (todos: TodoTypes[] | ((prevTodos: TodoTypes[]) => TodoTypes[])) => void;
+	mutate: KeyedMutator<any>;
 }
 
-export function Todos({ todos }: TodosProps) {
-	const deleteTodo = (id: string) => {
-		// setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
-	};
-	const editTodo = (id: string) => {
-		// setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
+export function Todos({ todos, mutate }: TodosProps) {
+	const deleteTodo = async (id: string) => {
+		try {
+			const res = await fetch(`http://localhost:2233/api/todos/${id}`, {
+				method: 'DELETE', // This will delete the todo
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			const data = await res.json();
+
+			// Check if the response is of type DeletedTodoMessage
+			if (isDeletedTodoMessage(data)) {
+				mutate();
+				toast.success(data.message); // Success message from the server
+				return;
+			}
+
+			// Handle unexpected response structure
+			toast.error('Unexpected response format');
+		} catch (error) {
+			toast.error('Error deleting todo');
+			console.error(error); // Log error for debugging
+		}
 	};
 
-	const toggleCompletion = (id: string) => {
-		// setTodos((prevTodos) => prevTodos.map((todo) => (todo._id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo)));
+	const toggleCompletion = async (id: string) => {
+		try {
+			// Get the current todo's completion status
+			const todoToUpdate = todos.find((todo) => todo._id === id);
+			const updatedIsCompleted = !todoToUpdate?.isCompleted;
+
+			// Send the request to toggle completion status
+			const res = await fetch(`http://localhost:2233/api/todos/${id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ isCompleted: updatedIsCompleted }), // Only update the isCompleted field
+			});
+
+			// Check for successful response
+			if (!res.ok) throw new Error('Failed to update completion status');
+
+			const updatedTodo = await res.json();
+
+			if (isTodo(updatedTodo)) {
+				toast.success(updatedTodo.isCompleted ? 'todo item was successful completed' : 'todo item was successful uncompleted');
+				// Update the todos with the server's response to keep them in sync
+				mutate();
+			}
+		} catch (error) {
+			console.error('Failed to toggle completion:', error);
+			toast.error('counld not update the server, Failed to toggle todo item completion');
+			// Revert the optimistic update in case of an error
+			mutate();
+		}
 	};
 
 	return (
@@ -42,13 +91,10 @@ export function Todos({ todos }: TodosProps) {
 								onClick={() => toggleCompletion(todo._id)}>
 								<FaCircleCheck />
 							</button>
-							<button
-								type="button"
-								name=""
-								onClick={() => editTodo(todo._id)}
-								className="p-1 transition-all duration-300 ease-in-out hover:text-black hover:bg-white rounded-xl">
-								<LuFileEdit />
-							</button>
+							<EditTodo
+								mutate={mutate}
+								todo={todo}
+							/>
 							<button
 								type="button"
 								name=""

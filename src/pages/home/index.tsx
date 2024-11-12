@@ -23,7 +23,7 @@ export function Home() {
 	const [limit, setLimit] = useState(4); // Default limit per page
 
 	// Using SWR hook for data fetching
-	const { data, error, isLoading } = useSWR(`http://localhost:2233/api/todos?page=${page}&limit=${limit}`, fetchTodos);
+	const { data, error, isLoading, mutate } = useSWR(`http://localhost:2233/api/todos?page=${page}&limit=${limit}`, fetchTodos);
 
 	// Reset page to 1 when limit changes
 	useEffect(() => {
@@ -50,8 +50,8 @@ export function Home() {
 	};
 
 	return (
-		<section className="flex flex-col items-center justify-center w-full min-h-[90dvh] border-2 border-black py-2 mb-3">
-			<NewTodoForm />
+		<section className="flex flex-col items-center justify-center w-full min-h-[90dvh] py-2 mb-3">
+			<NewTodoForm mutate={mutate} />
 			<section className="w-full flex flex-col items-center justify-center min-h-[80dvh]">
 				{error && !isLoading && (
 					<p className="w-1/2 flex items-center justify-center text-red-700 font-medium text-2xl h-[60dvh]">There was an error while fetching todos.</p>
@@ -59,7 +59,10 @@ export function Home() {
 				{isLoading && <Spinner height />}
 				{data && !isLoading && (
 					<>
-						<Todos todos={data.todos} />
+						<Todos
+							todos={data.todos}
+							mutate={mutate}
+						/>
 						<section
 							aria-roledescription="pagination-controls"
 							className="grid w-1/2 grid-cols-12 gap-2 mt-4">

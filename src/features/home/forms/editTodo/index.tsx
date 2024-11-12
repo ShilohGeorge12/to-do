@@ -1,29 +1,36 @@
 import { ChangeEvent, FormEvent, useRef, useState, useTransition } from 'react';
 import { FaSpinner } from 'react-icons/fa';
+import { LuFileEdit } from 'react-icons/lu';
 import { toast } from 'sonner';
 import { KeyedMutator } from 'swr';
 
 import { Aside } from '@/components/aside';
 import { isTodo, TodoTypes } from '@/types';
 
-interface NewTodoFormProps {
+interface EditTodoProps {
+	todo: TodoTypes;
 	mutate: KeyedMutator<any>;
 }
 
-export function NewTodoForm({ mutate }: NewTodoFormProps) {
-	const initState: Omit<TodoTypes, 'isCompleted' | 'createdAt' | '_id'> = {
-		title: '',
-		description: '',
+export function EditTodo({ todo, mutate }: EditTodoProps) {
+	const initState = {
+		title: todo.title,
+		description: todo.description,
 	};
-
 	const editTriggerBtnRef = useRef<HTMLButtonElement | null>(null);
 	const [formData, setFormData] = useState<typeof initState>(initState);
 	const [errorMessage, setErrorMessage] = useState<string[]>([]);
 	const [isPending, startTransition] = useTransition();
 
-	// Regex patterns for validation
-	const titleRegex = /^[a-zA-Z0-9\s]{3,50}$/; // title: 3 to 50 alphanumeric characters and spaces
-	const descriptionRegex = /^.{5,200}$/; // description: at least 5 characters and max 200
+	const editTriggerBtn = (
+		<button
+			type="button"
+			name={`edit todo with title ${todo.title}`}
+			ref={editTriggerBtnRef}
+			className="p-1 transition-all duration-300 ease-in-out hover:text-black hover:bg-white rounded-xl">
+			<LuFileEdit />
+		</button>
+	);
 
 	// Handle input changes
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,73 +38,40 @@ export function NewTodoForm({ mutate }: NewTodoFormProps) {
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
+	const updateCurrentTodo = async () => {
+		const req = await fetch(`http://localhost:2233/api/todos/${todo._id}`, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(formData),
+		});
+
+		if (!req.ok) throw new Error('Failed to update todo item');
+		const res = await req.json();
+
+		if (isTodo(res)) {
+			toast.success('todo item was successful updted');
+			// Success: Update the todos list
+			mutate();
+			editTriggerBtnRef.current?.click();
+		}
+	};
+
 	// Handle form submission
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setErrorMessage([]);
 
-		// Validate title and description with regex
-		const errors: string[] = [];
-
-		if (!titleRegex.test(formData.title)) {
-			errors.push('Title must be between 3 to 50 alphanumeric characters and spaces.');
+		try {
+			startTransition(() => {
+				updateCurrentTodo();
+			});
+		} catch (error) {
+			startTransition(() => {
+				setErrorMessage(['Failed to update todo item']);
+				// console.error('Error updating todo:', error);
+			});
 		}
-
-		if (!descriptionRegex.test(formData.description)) {
-			errors.push('Description must be between 5 to 200 characters.');
-		}
-
-		if (errors.length > 0) {
-			setErrorMessage(errors);
-			return; // If errors, do not submit
-		}
-
-		startTransition(() => {
-			// Call your API here and send the form data
-			fetch('http://localhost:2233/api/todos', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(formData),
-			})
-				.then(async (response) => {
-					if (!response.ok) {
-						throw new Error('Failed to create new todo');
-					}
-					const newTodo = await response.json();
-
-					if (isTodo(newTodo)) {
-						// Assuming you have a mutate function to update the UI
-						mutate();
-
-						// Reset form data
-						toast.success('new todo item added successfully');
-						setFormData(initState);
-
-						// Optionally, you can close the form modal
-						editTriggerBtnRef.current?.click();
-						return;
-					}
-
-					toast.error('Error Occurred while adding the todo item');
-					setErrorMessage(['Error Occurred while adding the todo item']);
-				})
-				.catch((_) => {
-					setErrorMessage(['Failed to add the todo. Please try again.']);
-				});
-		});
 	};
-
-	const editTriggerBtn = (
-		<button
-			type="button"
-			name={`Add an Item button`}
-			ref={editTriggerBtnRef}
-			className={`p-2 flex items-center justify-center rounded-lg bg-black text-white hover:scale-105 transition-all duration-500 ease-in-out font-medium`}>
-			Add New Item to the Todo List
-		</button>
-	);
 
 	return (
 		<Aside
@@ -144,7 +118,7 @@ export function NewTodoForm({ mutate }: NewTodoFormProps) {
 							<FaSpinner />
 						</span>
 					)}
-					Add New Item
+					Update Todo
 				</button>
 
 				{errorMessage.length > 0 && (
