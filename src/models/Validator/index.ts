@@ -10,3 +10,13 @@ export function validateNewTodos(schema: Request) {
 	});
 	return Schema.validate(schema, { abortEarly: false });
 }
+
+export function validateUpdateTodo(schema: Request) {
+	const Schema = joi.object<Partial<Omit<TodoTypes, 'createdAt'>>>({
+		title: joi.string().min(2).max(90).optional(),
+		description: joi.string().min(2).max(1200).optional(),
+		isCompleted: joi.boolean().optional(),
+	});
+
+	return Schema.validate(schema, { abortEarly: false });
+}
