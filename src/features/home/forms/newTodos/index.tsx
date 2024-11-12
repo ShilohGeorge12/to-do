@@ -5,15 +5,13 @@ import { Aside } from '@/components/aside';
 import { TodoTypes } from '@/types';
 
 interface NewTodoFormProps {
-	setTodos: (todos: TodoTypes[] | ((prevTodos: TodoTypes[]) => TodoTypes[])) => void;
+	// setTodos: (todos: TodoTypes[] | ((prevTodos: TodoTypes[]) => TodoTypes[])) => void;
 }
 
-export function NewTodoForm({ setTodos }: NewTodoFormProps) {
-	const initState: TodoTypes = {
-		_id: '',
+export function NewTodoForm() {
+	const initState: Omit<TodoTypes, 'isCompleted' | 'createdAt' | '_id'> = {
 		title: '',
-		describtion: '',
-		isCompleted: false,
+		description: '',
 	};
 	const editTriggerBtnRef = useRef<HTMLButtonElement | null>(null);
 	const [formData, setFormData] = useState<typeof initState>(initState);
@@ -30,7 +28,7 @@ export function NewTodoForm({ setTodos }: NewTodoFormProps) {
 		setErrorMessage([]);
 		startTransition(() => {
 			//
-			setTodos((prev) => [...prev, formData]);
+			// setTodos((prev) => [...prev, formData]);
 			setFormData(initState);
 			editTriggerBtnRef.current?.click();
 		});
@@ -74,7 +72,7 @@ export function NewTodoForm({ setTodos }: NewTodoFormProps) {
 						inputMode="text"
 						required
 						disabled={isPending}
-						value={formData.describtion}
+						value={formData.description}
 						onChange={handleInputChange}
 						className="w-full h-full px-4 text-lg font-semibold tracking-wider transition-all duration-500 ease-in-out bg-white rounded-lg outline-0 ring-0 ring-white hover:ring-1 focus:ring-2"
 					/>

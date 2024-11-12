@@ -6,7 +6,7 @@ import { NotFount } from './pages/not-found';
 
 function App() {
 	return (
-		<section className="w-full h-screen p-2 text-base tracking-wide text-black">
+		<section className="w-full p-2 text-base tracking-wide text-black">
 			<header className="flex flex-col items-center justify-center w-full gap-2">
 				<h1 className="text-2xl font-semibold">To-Do</h1>
 			</header>
