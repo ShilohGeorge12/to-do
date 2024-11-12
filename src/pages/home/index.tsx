@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import useSWR from 'swr';
@@ -51,7 +52,12 @@ export function Home() {
 	};
 
 	return (
-		<section className="flex flex-col items-center justify-center w-full min-h-[90dvh] py-2 mb-3">
+		<motion.section
+			className="flex flex-col items-center justify-center w-full min-h-[90dvh] py-2 mb-3"
+			initial={{ opacity: 0, translateY: '-100vh', translateZ: -100 }}
+			animate={{ opacity: 1, translateX: '0vw', translateY: '0vh', translateZ: 0 }}
+			exit={{ opacity: 0, translateZ: -100 }}
+			transition={{ type: 'spring', damping: 10, stiffness: 100 }}>
 			<NewTodoForm mutate={mutate} />
 			<section className="w-full flex flex-col items-center justify-center min-h-[80dvh]">
 				{error && !isLoading && (
@@ -100,6 +106,6 @@ export function Home() {
 					</>
 				)}
 			</section>
-		</section>
+		</motion.section>
 	);
 }

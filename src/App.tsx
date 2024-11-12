@@ -6,6 +6,21 @@ import { Home } from './pages/home';
 import { NotFount } from './pages/not-found';
 
 function App() {
+	const allRoutes = [
+		{
+			path: '/',
+			element: (
+				<ErrorBoundary>
+					<Home />
+				</ErrorBoundary>
+			),
+		},
+		{
+			path: '*',
+			element: <NotFount />,
+		},
+	];
+
 	return (
 		<section className="w-full p-2 text-base tracking-wide text-black">
 			<header className="flex flex-col items-center justify-center w-full gap-2">
@@ -14,18 +29,13 @@ function App() {
 			<main>
 				<Router>
 					<Routes>
-						<Route
-							path="/"
-							element={
-								<ErrorBoundary>
-									<Home />
-								</ErrorBoundary>
-							}
-						/>
-						<Route
-							path="*"
-							element={<NotFount />}
-						/>
+						{allRoutes.map((route) => (
+							<Route
+								key={route.path}
+								path={route.path}
+								element={route.element}
+							/>
+						))}
 					</Routes>
 				</Router>
 			</main>
