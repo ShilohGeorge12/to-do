@@ -3,6 +3,7 @@ import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { toast } from 'sonner';
 import { KeyedMutator } from 'swr';
 
+import { BACKEND_API_URL } from '@/lib/utils';
 import { isDeletedTodoMessage, isTodo, TodoTypes } from '@/types';
 
 import { EditTodo } from '../../forms/editTodo';
@@ -46,7 +47,7 @@ export function Todos({ todos, mutate }: TodosProps) {
 			const updatedIsCompleted = !todoToUpdate?.isCompleted;
 
 			// Send the request to toggle completion status
-			const res = await fetch(`http://localhost:2233/api/todos/${id}`, {
+			const res = await fetch(`${BACKEND_API_URL}/todos/${id}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ isCompleted: updatedIsCompleted }), // Only update the isCompleted field

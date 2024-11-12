@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { KeyedMutator } from 'swr';
 
 import { Aside } from '@/components/aside';
+import { BACKEND_API_URL } from '@/lib/utils';
 import { isTodo, TodoTypes } from '@/types';
 
 interface EditTodoProps {
@@ -39,7 +40,7 @@ export function EditTodo({ todo, mutate }: EditTodoProps) {
 	};
 
 	const updateCurrentTodo = async () => {
-		const req = await fetch(`http://localhost:2233/api/todos/${todo._id}`, {
+		const req = await fetch(`${BACKEND_API_URL}/todos/${todo._id}`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(formData),

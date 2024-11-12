@@ -6,6 +6,7 @@ import { Spinner } from '@/components/spinner';
 import { SelectComponent } from '@/features/home/components/selectComponent';
 import { Todos } from '@/features/home/components/todos';
 import { NewTodoForm } from '@/features/home/forms/newTodos';
+import { BACKEND_API_URL } from '@/lib/utils';
 import { isTodos } from '@/types';
 
 // Fetch function for SWR
@@ -23,7 +24,7 @@ export function Home() {
 	const [limit, setLimit] = useState(4); // Default limit per page
 
 	// Using SWR hook for data fetching
-	const { data, error, isLoading, mutate } = useSWR(`http://localhost:2233/api/todos?page=${page}&limit=${limit}`, fetchTodos);
+	const { data, error, isLoading, mutate } = useSWR(`${BACKEND_API_URL}/todos?page=${page}&limit=${limit}`, fetchTodos);
 
 	// Reset page to 1 when limit changes
 	useEffect(() => {

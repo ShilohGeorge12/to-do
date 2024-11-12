@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { KeyedMutator } from 'swr';
 
 import { Aside } from '@/components/aside';
+import { BACKEND_API_URL } from '@/lib/utils';
 import { isTodo, TodoTypes } from '@/types';
 
 interface NewTodoFormProps {
@@ -54,7 +55,7 @@ export function NewTodoForm({ mutate }: NewTodoFormProps) {
 
 		startTransition(() => {
 			// Call your API here and send the form data
-			fetch('http://localhost:2233/api/todos', {
+			fetch(`${BACKEND_API_URL}/todos`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
