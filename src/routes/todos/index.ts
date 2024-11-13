@@ -9,23 +9,52 @@ export const TodoRoutes = Router();
  * @swagger
  * /api/todos:
  *   get:
- *     summary: Get all todos
+ *     summary: Get a paginated list of todos
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         description: Page number (default is 1)
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         description: Number of todos per page (default is 10)
+ *         schema:
+ *           type: integer
+ *           example: 10
  *     responses:
  *       200:
- *         description: A list of all todos
+ *         description: A list of todos with pagination info
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
- *                   title:
- *                     type: string
- *                   completed:
- *                     type: boolean
+ *               type: object
+ *               properties:
+ *                 todos:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       title:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       isCompleted:
+ *                         type: boolean
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                 totalItems:
+ *                   type: integer
+ *                 totalPages:
+ *                   type: integer
+ *                 currentPage:
+ *                   type: integer
  */
 TodoRoutes.get('/todos', ErrorBoundary(getTodos));
 
@@ -46,7 +75,10 @@ TodoRoutes.get('/todos', ErrorBoundary(getTodos));
  *               title:
  *                 type: string
  *                 example: "Buy groceries"
- *               completed:
+ *               description:
+ *                 type: string
+ *                 example: "Get fruits, milk, and bread"
+ *               isCompleted:
  *                 type: boolean
  *                 example: false
  *     responses:
@@ -61,8 +93,13 @@ TodoRoutes.get('/todos', ErrorBoundary(getTodos));
  *                   type: string
  *                 title:
  *                   type: string
- *                 completed:
+ *                 description:
+ *                   type: string
+ *                 isCompleted:
  *                   type: boolean
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
  */
 TodoRoutes.post('/todos', ErrorBoundary(createTodo));
 
@@ -90,10 +127,15 @@ TodoRoutes.post('/todos', ErrorBoundary(createTodo));
  *                   type: string
  *                 title:
  *                   type: string
- *                 completed:
+ *                 description:
+ *                   type: string
+ *                 isCompleted:
  *                   type: boolean
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
  *       404:
- *         description: Todo not found with the specified ID
+ *         description: Todo not found
  */
 TodoRoutes.get('/todos/:id', ErrorBoundary(getTodo));
 
@@ -113,7 +155,7 @@ TodoRoutes.get('/todos/:id', ErrorBoundary(getTodo));
  *       200:
  *         description: Todo deleted successfully
  *       404:
- *         description: Todo not found with the specified ID
+ *         description: Todo not found
  */
 TodoRoutes.delete('/todos/:id', ErrorBoundary(deleteTodo));
 
@@ -139,7 +181,10 @@ TodoRoutes.delete('/todos/:id', ErrorBoundary(deleteTodo));
  *               title:
  *                 type: string
  *                 example: "Updated todo"
- *               completed:
+ *               description:
+ *                 type: string
+ *                 example: "Updated description for the todo"
+ *               isCompleted:
  *                 type: boolean
  *                 example: true
  *     responses:
@@ -154,11 +199,16 @@ TodoRoutes.delete('/todos/:id', ErrorBoundary(deleteTodo));
  *                   type: string
  *                 title:
  *                   type: string
- *                 completed:
+ *                 description:
+ *                   type: string
+ *                 isCompleted:
  *                   type: boolean
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
  *       400:
  *         description: Invalid request body or bad data
  *       404:
- *         description: Todo not found with the specified ID
+ *         description: Todo not found
  */
 TodoRoutes.put('/todos/:id', ErrorBoundary(updateTodo));

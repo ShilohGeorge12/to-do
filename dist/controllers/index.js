@@ -18,7 +18,6 @@ export const getTodos = async (req, res) => {
         TodoModel.countDocuments(), // Count total documents in parallel
     ]);
     const totalPages = Math.ceil(totalItems / limit);
-    console.log(todos);
     res.status(200).json({
         todos,
         totalItems,
