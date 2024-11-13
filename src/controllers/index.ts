@@ -24,6 +24,7 @@ export const getTodos = async (req: Request, res: Response) => {
 	]);
 
 	const totalPages = Math.ceil(totalItems / limit);
+	console.log(todos);
 
 	res.status(200).json({
 		todos,
