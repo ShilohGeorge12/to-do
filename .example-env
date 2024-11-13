@@ -1,3 +1,4 @@
 PORT=2233  
 DATABASE_URL=''
 BASE_URL='http://localhost:'
+FRONT_END_URL='http://localhost:2234'
