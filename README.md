@@ -1,50 +1,112 @@
-# React + TypeScript + Vite
+# ToDo Application - Client Side
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the client-side of the **ToDo Application**, which was developed as part of a **Full Stack Engineer Assessment** for an internship at Sleeky Programmers. The
+application allows users to create, read, update, and delete todo items with support for pagination.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. [Project Overview](#project-overview)
+2. [Technologies and Tools](#technologies-and-tools)
+3. [Installation Instructions](#installation-instructions)
+4. [Running the Application](#running-the-application)
+5. [Features](#features)
+6. [Contributing](#contributing)
+7. [License](#license)
 
-## Expanding the ESLint configuration
+## Project Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+This is a **ToDo Application** built as part of a full-stack internship assessment. The client-side application interacts with a backend API and provides users with the
+ability to:
 
-- Configure the top-level `parserOptions` property like this:
+- **Create**, **Read**, **Update**, and **Delete** todo items.
+- **Pagination** functionality for managing large sets of tasks.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+It utilizes modern web technologies to ensure a smooth and responsive user experience.
+
+## Technologies and Tools
+
+The following technologies and tools are used in the development of the client-side application:
+
+- **React**: JavaScript library for building user interfaces.
+- **TailwindCSS**: Utility-first CSS framework for styling the application.
+- **Framer Motion**: Library for animations in React.
+- **shad/cn**: Classnames utility for conditional CSS classes.
+- **SWR**: React hooks library for data fetching and caching.
+- **React Router DOM**: Declarative routing for React applications.
+- **React Icons**: Icon library for including SVG icons in the app.
+
+## Installation Instructions
+
+To run the application locally, follow these steps:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ShilohGeorge12/to-do.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Navigate to the project directory and install the required dependencies:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+cd todo-application-client
+npm install
 ```
+
+### 3. Set up the environment
+
+Create a `.env` file in the root directory of the project and add the following variable:
+
+```
+VITE_BACKEND_URL=http://localhost:5000/api
+```
+
+Make sure to replace `http://localhost:5000/api` with the actual URL of your backend API if it's hosted elsewhere.
+
+### 4. Start the development server
+
+Once the dependencies are installed and the environment variables are set, you can start the development server:
+
+```bash
+npm run dev
+```
+
+This will start the application on [http://localhost:2234](http://localhost:2234) (or the URL specified in your terminal).
+
+## Running the Application
+
+Once the application is running, navigate to [http://localhost:2234](http://localhost:2234) in your browser.
+
+You can interact with the ToDo items by performing the following actions:
+
+- **Create**: Add a new todo item.
+- **Update**: Edit an existing todo item.
+- **Delete**: Remove a todo item.
+- **Pagination**: Navigate through pages of todo items.
+
+## Features
+
+- **CRUD Functionality**:
+  - Create new todos.
+  - Update existing todos.
+  - Delete todos.
+  - View todos on different pages.
+- **Pagination**:
+  - Supports pagination to handle large lists of todo items, allowing users to view todos in a paginated manner.
+
+## Contributing
+
+If you would like to contribute to the project, feel free to fork the repository and submit pull requests. You can help by:
+
+- Fixing bugs or issues.
+- Adding new features.
+- Improving documentation.
+
+### Code of Conduct
+
+Please ensure that your contributions are respectful and adhere to common open-source community standards.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

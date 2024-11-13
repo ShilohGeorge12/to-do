@@ -7,7 +7,8 @@ import { Spinner } from '@/components/spinner';
 import { SelectComponent } from '@/features/home/components/selectComponent';
 import { Todos } from '@/features/home/components/todos';
 import { NewTodoForm } from '@/features/home/forms/newTodos';
-import { BACKEND_API_URL } from '@/lib/utils';
+import { SeoHeaders } from '@/lib/seo';
+import { BACKEND_API_URL, BASE_URL } from '@/lib/utils';
 import { isTodos } from '@/types';
 
 // Fetch function for SWR
@@ -58,6 +59,15 @@ export function Home() {
 			animate={{ opacity: 1, translateX: '0vw', translateY: '0vh', translateZ: 0 }}
 			exit={{ opacity: 0, translateZ: -100 }}
 			transition={{ type: 'spring', damping: 10, stiffness: 100 }}>
+			<SeoHeaders
+				title="To-do List Application"
+				description="Manage your daily tasks efficiently with this simple To-do list app built with React."
+				canonicalUrl={BASE_URL}
+				openGraphImage={`${BASE_URL}/web-app-manifest-1200x630.png`}
+				creator="Shiloh George"
+				publisher="To-Do"
+				twitterCardType={BASE_URL + '/web-app-manifest-512x512.png'}
+			/>
 			<NewTodoForm mutate={mutate} />
 			<section className="w-full flex flex-col items-center justify-center min-h-[80dvh]">
 				{error && !isLoading && (
