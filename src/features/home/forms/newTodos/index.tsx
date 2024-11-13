@@ -23,7 +23,7 @@ export function NewTodoForm({ mutate }: NewTodoFormProps) {
 	const [isPending, startTransition] = useTransition();
 
 	// Regex patterns for validation
-	const titleRegex = /^[a-zA-Z0-9\s]{3,50}$/; // title: 3 to 50 alphanumeric characters and spaces
+	const titleRegex = /^[a-zA-Z0-9\s]{3,90}$/; // title: 3 to 50 alphanumeric characters and spaces
 	const descriptionRegex = /^.{5,200}$/; // description: at least 5 characters and max 200
 
 	// Handle input changes
