@@ -60,14 +60,15 @@ export function Home() {
 			exit={{ opacity: 0, translateZ: -100 }}
 			transition={{ type: 'spring', damping: 10, stiffness: 100 }}>
 			<SeoHeaders
-				title="To-do List Application"
-				description="Manage your daily tasks efficiently with this simple To-do list app built with React."
+				title="ToDoneHub - Task Management App"
+				description="Effortlessly organize and complete your daily tasks with ToDoneHub, a sleek and efficient task management app built with React."
 				canonicalUrl={BASE_URL}
 				openGraphImage={`${BASE_URL}/web-app-manifest-1200x630.png`}
 				creator="Shiloh George"
-				publisher="To-Do"
-				twitterCardType={BASE_URL + '/web-app-manifest-512x512.png'}
+				publisher="ToDoneHub"
+				twitterCardType={`${BASE_URL}/web-app-manifest-512x512.png`}
 			/>
+
 			<NewTodoForm mutate={mutate} />
 			<section className="w-full flex flex-col items-center justify-center min-h-[80dvh]">
 				{error && !isLoading && (
