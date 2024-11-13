@@ -4,14 +4,10 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "tsc -w & nodemon ./dist/index.js",
-		"start": "node ./dist/index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build": "tsc",
+		"start": "node ./dist/index.js"
 	},
 	"type": "module",
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"description": "",
 	"dependencies": {
 		"@types/joi": "^17.2.2",
 		"cors": "^2.8.5",
