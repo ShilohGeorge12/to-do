@@ -64,36 +64,6 @@ export const createTodo = async (req: Request, res: Response) => {
 	});
 };
 
-// export const updateTodo = async (req: Request, res: Response) => {
-// 	const { id } = req.params;
-// 	const updates = req.body;
-
-// 	// Validate that updates include only allowed fields
-// 	const allowedFields = ['title', 'description', 'isCompleted'];
-// 	const fieldsToUpdate = Object.keys(updates).filter((key) => allowedFields.includes(key));
-
-// 	if (fieldsToUpdate.length === 0) {
-// 		res.status(400).json({ error: 'No valid fields provided for update' });
-// 		return;
-// 	}
-
-// 	// Find the todo by ID and apply updates
-// 	const todo = await TodoModel.findById(id);
-// 	if (!todo) {
-// 		res.status(404).json({ error: 'Todo item not found' });
-// 		return;
-// 	}
-
-// 	// Update each field
-// 	fieldsToUpdate.forEach((field) => {
-// 		(todo as any)[field] = updates[field];
-// 	});
-
-// 	await todo.save();
-
-// 	res.status(200).json(todo); // Send the updated todo back to the client
-// };
-
 export const updateTodo = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	const updates = req.body;
