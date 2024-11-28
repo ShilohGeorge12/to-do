@@ -122,6 +122,20 @@ git clone --single-branch --branch server https://github.com/yourusername/to-do.
 
 This will clone the `server` branch into a folder named `server`.
 
+### 4. **Cloning the nest-Server Branch into the `nest-server` Folder**
+Similarly, you can clone the `nest-server` branch and rename the directory to `nest-server`.
+
+#### Using SSH (for SSH users):
+```bash
+git clone --single-branch --branch nest-server git@github.com:yourusername/to-do.git nest-server
+```
+
+#### Using HTTPS (for general users):
+
+```bash
+git clone --single-branch --branch nest-server https://github.com/yourusername/to-do.git nest-server
+```
+
 ---
 
 ### Additional Steps After Cloning
