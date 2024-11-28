@@ -16,11 +16,11 @@ interface TodosProps {
 export function Todos({ todos, mutate }: TodosProps) {
 	const deleteTodo = async (id: string) => {
 		try {
-			const res = await fetch(`http://localhost:2233/api/todos/${id}`, {
+			const res = await fetch(`${BACKEND_API_URL}/todos/${id}`, {
 				method: 'DELETE', // This will delete the todo
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				// headers: {
+				// 	'Content-Type': 'application/json',
+				// },
 			});
 
 			const data = await res.json();
