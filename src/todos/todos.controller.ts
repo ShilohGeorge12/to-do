@@ -1,9 +1,12 @@
+import mongoose from 'mongoose';
+
 import {
   Body,
   Controller,
   Delete,
   Get,
   HttpCode,
+  HttpException,
   HttpStatus,
   Param,
   Post,
@@ -29,8 +32,10 @@ export class TodosController {
   }
 
   @Get('/:id')
-  // @HttpCode(HttpStatus.OK)
   getSingleTodo(@Param('id') id: string) {
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
+    if (!isValidId)
+      throw new HttpException('Invalid ID', HttpStatus.BAD_REQUEST);
     return this.todosService.getTodo(id);
   }
 
@@ -41,11 +46,17 @@ export class TodosController {
 
   @Put('/:id')
   updateTodo(@Param('id') id: string, @Body() updatedTodo: UpdateTodosDto) {
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
+    if (!isValidId)
+      throw new HttpException('Invalid ID', HttpStatus.BAD_REQUEST);
     return this.todosService.updateTodo(id, updatedTodo);
   }
 
   @Delete('/:id')
   deleteTodo(@Param('id') id: string) {
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
+    if (!isValidId)
+      throw new HttpException('Invalid ID', HttpStatus.BAD_REQUEST);
     return this.todosService.removeTodo(id);
   }
 }
