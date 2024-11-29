@@ -1,99 +1,96 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Server-side Nest Todo API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Project Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a **Nest Todo API** built for managing tasks. It was created as part of the **Full Stack Engineering [Intern] Role** at Sleeky Programmers To learn This **NestJS**. The API provides
+full CRUD functionality to create, update, delete, and fetch todos. The application also implements pagination to retrieve todos in a paginated format.
 
-## Description
+The backend is built using **NestJs** and **MongoDB**.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Key Features
 
-## Project setup
+- **Create** a new todo item
+- **Read** todos (fetch all or single todo by ID)
+- **Update** a todo's information
+- **Delete** a todo
+- **Pagination** support for fetching todos
 
-```bash
-$ npm install
-```
+## Technologies and Tools
 
-## Compile and run the project
+The server-side of the application is built using the following technologies and tools:
 
-```bash
-# development
-$ npm run start
+- **Node.js** - JavaScript runtime
+- **NestJs** - Web framework for Node.js
+- **MongoDB** - NoSQL database
+- **Mongoose** - ODM (Object Data Modeling) library for MongoDB
+- **CORS** - Cross-Origin Resource Sharing middleware for Express
 
-# watch mode
-$ npm run start:dev
+## Installation Instructions
 
-# production mode
-$ npm run start:prod
-```
+### Prerequisites
 
-## Run tests
+Before you begin, ensure that you have the following installed:
 
-```bash
-# unit tests
-$ npm run test
+- **Node.js** (version 14 or higher)
+- **MongoDB** (locally or use a cloud service like MongoDB Atlas)
+- **Git**
 
-# e2e tests
-$ npm run test:e2e
+### Step-by-Step Setup
 
-# test coverage
-$ npm run test:cov
-```
+1. **Clone the repository**:
 
-## Deployment
+   ```bash
+   git clone --single-branch --branch nest-server git@github.com:yourusername/to-do.git nest-server
+   cd nest-server
+   ```
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+2. **Install dependencies**: Install all necessary dependencies by running:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+   ```bash
+   npm install
+   ```
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+3. **Set up environment variables**: Create a `.env` file in the root of the project, and add the following environment variables:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+   ```
+   PORT=2232
+   DATABASE_URL=mongodb://localhost:27017/todo_app  # Update with your MongoDB connection string
+   ```
 
-## Resources
+   Make sure to replace `DATABASE_URL` with your actual MongoDB connection string if using a cloud database like MongoDB Atlas.
 
-Check out a few resources that may come in handy when working with NestJS:
+4. **Run the development server**: Start the server by running the following command:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+   ```bash
+   npm run start:dev
+   ```
 
-## Support
+   The server will be running at `http://localhost:2232`.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## Contributing
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+We welcome contributions! Please follow these steps to contribute to the project:
+
+1. Fork the repository.
+2. Clone your forked repository to your local machine.
+3. Create a new branch.
+4. Make your changes and commit them.
+5. Push your changes to your forked repository.
+6. Create a pull request describing the changes you made.
+
+---
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contact
+
+For any questions or concerns, feel free to reach out to the project maintainer:
+
+- **Name**: Shiloh George
+- **Email**: [Email](mailTo:shilohgeorge2019@gmail.com)
